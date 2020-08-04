@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     
     int N{3}; // number of time steps
     double time_step{T/N}; //size of each time step
-    //This one is CRR method
+    // CRR method
     double u{exp(sigma*sqrt(time_step))}; // the amount the stock goes up 
     double d{1/u};                      // or down at each step
     double p{(exp(r*time_step)-d)/(u-d)}; // the probability of the stock moving up at each step
