@@ -2,17 +2,7 @@
 #include <vector>
 #include <cmath>
 
-
-
-int main(int argc, char **argv)
-{
-    double S { 100};  //  spot price  
-    double X  {95};  // strike price
-    double r {0.06};   // risk-free rate 
-    double T {1};    // time until expiry
-    double sigma {0.2};  //volatility
-    
-    int N{3}; // number of time steps
+double binom_tree_call_price(int N, double S, double X, double r,double T, double sigma) {
     double time_step{T/N}; //size of each time step
     // CRR method
     double u{exp(sigma*sqrt(time_step))}; // the amount the stock goes up 
@@ -73,5 +63,20 @@ int main(int argc, char **argv)
         }
         std::cout << std::endl;
     }
+    return CallPriceTree[0][0];
+}
+
+int main(int argc, char **argv)
+{
+    double S { 100};  //  spot price  
+    double X  {100};  // strike price
+    double R{0.05}; //riskfree return over one year
+    double r{log(1+R)};//0.04879... continuously compounded riskfree rate
+    double T {2};    // time until expiry
+    double sigma {0.1};  //volatility
+    int N{2}; // number of time steps
+    double call_price {binom_tree_call_price(N,S,X,r,T,sigma)};
+    std::cout << "The call price with N="<<N<< ", S="<<S<<", X="<<X<<", r="<<r<<", T="<<T<<", sigma="<<sigma<<": "<< call_price << std::endl;
+
 	return 0;
 }
