@@ -4,9 +4,9 @@
 
 int main()
 {
-	double S_0 { 100}; // stock value at time 0
-    double S_u { 110};//stock value if price goes down
-    double S_d {90 }; //stock value if price goes up
+	double S_0 { 110}; // stock value at time 0
+    double S_u { 120};//stock value if price goes down
+    double S_d {100 }; //stock value if price goes up
     double X {100}; //strike price of call
     double C_u { std::max(S_u-X,0.0)};
     double C_d { std::max(S_d-X,0.0)};
@@ -27,7 +27,7 @@ int main()
     std::cout << "Hedging " <<std::endl;
     std::cout << "===================== " <<std::endl;
     double T {1};
-    double r{0.00};
+    double r{0.05};
     double R{log(1+r)};
     double discount_factor {exp(-R*T)};//1/(1+r)};
     std::cout << "If the interest rate is " << r << " and the stock movement is " << T << " years in the future. "<<std::endl;
@@ -67,7 +67,7 @@ int main()
     double D {(S_d/S_0)-1};
     double p{(S_0*exp(R*T)-S_d)/(S_u-S_d) };//((1+r)*S_0-S_d)/(S_u-S_d)};
     std::cout << "p = "<< p << std::endl;
-    std::cout << "The value of C(0) = ("<< p <<  " * C_u(T) + "<<  (1 - p) << "* C_d(T))*exp(-(r*T))." <<std::endl;
+    std::cout << "The value of C(0) = ("<< p <<  " * C_u(T) + "<<  (1 - p) << "* C_d(T))*exp(-(R*T))." <<std::endl;
     std::cout << "The value of C(0) = "<< (p * C_u +  (1 - p)* C_d )*discount_factor <<std::endl;
     return 0;
 }
