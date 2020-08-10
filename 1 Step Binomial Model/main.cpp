@@ -27,9 +27,9 @@ int main()
     std::cout << "Hedging " <<std::endl;
     std::cout << "===================== " <<std::endl;
     double T {1};
-    double r{0.05};
-    double R{log(1+r)};
-    double discount_factor {exp(-R*T)};//1/(1+r)};
+    double R{0.05}; //riskfree return over one year
+    double r{log(1+R)};//0.04879... continuously compounded riskfree rate
+    double discount_factor {exp(-r*T)};//1/(1+r)};
     std::cout << "If the interest rate is " << r << " and the stock movement is " << T << " years in the future. "<<std::endl;
     std::cout << "By having a portfolio of " << delta << " * S - C we are hedged again the stock price." << std::endl;
     std::cout << "If the stock goes up the portfolio is worth " << delta*S_u - C_u <<std::endl;
@@ -42,7 +42,7 @@ int main()
     std::cout << "Replication " <<std::endl;
     std::cout << "===================== " <<std::endl;
     double A_0{100};
-    double A_n{A_0*exp(R*T)}; //A_0*(r+1)};
+    double A_n{A_0*exp(r*T)}; //A_0*(r+1)};
     std::cout << "A call option can be replicated by a portfolio of x stock and y bonds/cash." <<std::endl;
     std::cout << "C(T) = xS(T) + yA(T)" <<std::endl;
     std::cout << "Where A(T) are bonds/cash worth " << A_0 << " initially and "<< A_n << " after " << T << " years. "<<std::endl;
@@ -65,9 +65,9 @@ int main()
     std::cout << "Where p is the risk neutral probably of the stock going up." <<std::endl;
     double U {(S_u/S_0)-1};
     double D {(S_d/S_0)-1};
-    double p{(S_0*exp(R*T)-S_d)/(S_u-S_d) };//((1+r)*S_0-S_d)/(S_u-S_d)};
+    double p{(S_0*exp(r*T)-S_d)/(S_u-S_d) };//((1+r)*S_0-S_d)/(S_u-S_d)};
     std::cout << "p = "<< p << std::endl;
-    std::cout << "The value of C(0) = ("<< p <<  " * C_u(T) + "<<  (1 - p) << "* C_d(T))*exp(-(R*T))." <<std::endl;
+    std::cout << "The value of C(0) = ("<< p <<  " * C_u(T) + "<<  (1 - p) << "* C_d(T))*exp(-(r*T))." <<std::endl;
     std::cout << "The value of C(0) = "<< (p * C_u +  (1 - p)* C_d )*discount_factor <<std::endl;
     return 0;
 }
